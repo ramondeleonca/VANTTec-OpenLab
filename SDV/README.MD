@@ -1,15 +1,3 @@
-### Dijkstra requirements
-1. Starts from a chosen node
-2. Ends at a chosen node
-3. Terminates if there is no possible path
-4. A node can have multiple edges connecting to other nodes at specified distances
-
-### Dijkstra procedure
-1. Starts at the chosen node
-2. Checks all connected node's distances (current distance from start + edge distance)
-3. Repeat recursively at the smallest node until there are no forward edges (not a solution) or the end node is reached
-4. If the path for the current node is not a solution, continue with the next smallest
-
 ## SDV OpenLab Description
 Software | Implementación de Dijkstra / Programación Orientada a Objetos
 
@@ -32,3 +20,22 @@ Implementación del algoritmo de Dijkstra usando programación orientada a objet
 - Documentación de las clases y estructura del programa.
 - Representación visual de la estructura de datos.
 - Ejemplos de pruebas y resultados.
+
+### Dijkstra requirements
+1. Starts from a chosen node
+2. Ends at a chosen node
+3. Terminates if there is no possible path
+4. A node can have multiple edges connecting to other nodes at specified distances
+
+### Dijkstra procedure
+1. Starts at the chosen node
+2. Checks all connected node's distances (current distance from start + edge distance)
+3. Repeat recursively at the smallest node until there are no forward edges (not a solution) or the end node is reached
+4. If the path for the current node is not a solution, continue with the next smallest
+
+## Features
+- Multithreading / parallelism
+- Python data-class and heapq based implementation
+- Timer profiling
+- Template typing
+- Node independence

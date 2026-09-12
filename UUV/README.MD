@@ -1,7 +1,6 @@
-## Environment
-The ROS2 environment is set up on a Ubuntu 26.04 VM running on my Zima OS homelab with ROS 2 Lyrical Luth installed, development is done through a Visual Studio Code tunnel connected via Tailscale
-
 ## UUV OpenLab Description
+[View UUV OpenLab challenge code](/UUV/)
+
 ### Contexto del problema
 El UUV opera en un entorno subacuático, por lo que es importante detectar de
 manera temprana la presencia de agua dentro del enclosure para prevenir daños en
@@ -59,3 +58,47 @@ Al finalizar, ustedes deberán tener un pequeño sistema funcional en ROS 2 capa
 - Uso de Git
 - Capacidad para investigar y resolver problemas
 - Documentación
+
+## Environment
+The ROS2 environment is set up on a Ubuntu 26.04 VM running on my Zima OS homelab with ROS 2 Lyrical Luth installed, development is done through a Visual Studio Code tunnel connected via Tailscale
+
+## Data Flow
+
+```mermaid
+flowchart LR
+    SN["sensor_node\nPublishes Bool @ 1 Hz\n/water_sensor"]
+    DN["detector_node\nSubscribes & republishes\n/leak_status"]
+    LOG["Other nodes\n(logger, actuator...)"]
+
+    SN -- "/water_sensor [Bool]" --> DN
+    DN -- "/leak_status [Bool]" --> LOG
+```
+## How it works
+
+- **`sensor_node`** publishes `True` (water detected) or `False` (dry) on `/water_sensor` every second. After 15 seconds it simulates a leak.
+- **`detector_node`** subscribes to `/water_sensor`, logs a warning when water is detected, and re-publishes the value on `/leak_status`.
+
+## How to Run
+
+```bash
+# Build
+cd UUV/ros2_ws
+colcon build
+source install/setup.bash
+```
+
+**Terminal 1 — sensor:**
+```bash
+ros2 run water_sensor_sim sensor_node
+```
+
+**Terminal 2 — detector:**
+```bash
+ros2 run water_leak_detector detector_node
+```
+
+**Monitor:**
+```bash
+ros2 topic echo /water_sensor
+ros2 topic echo /leak_status
+```
